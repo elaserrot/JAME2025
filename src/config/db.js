@@ -1,13 +1,16 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
+require('dotenv').config();
+
 
 const connectDB = async () => {
     const pool = mysql.createPool({
-        host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASS || '',
-        database: process.env.DB_NAME || 'jame',
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME,
+        port: process.env.DB_PORT || 3306,
         connectTimeout: 10000,
-        ssl: process.env.DB_SSL ? true : false
+        ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
     });
 
     return new Promise((resolve, reject) => {

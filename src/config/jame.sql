@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2025 a las 14:00:27
+-- Tiempo de generación: 30-05-2025 a las 02:57:52
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.0
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,8 +32,16 @@ CREATE TABLE `carrito_compras` (
   `id_producto` int(100) NOT NULL,
   `cantidad` int(100) NOT NULL,
   `id_usuario` int(255) NOT NULL,
-  `carrito_estado` int(2) NOT NULL DEFAULT 1
+  `carrito_estado` int(2) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`ID_CarritoCompras`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `carrito_compras`
+--
+
+INSERT INTO `carrito_compras` (`ID_CarritoCompras`, `id_producto`, `cantidad`, `id_usuario`, `carrito_estado`) VALUES
+(40, 3, 1, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -115,24 +123,10 @@ CREATE TABLE `compras` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `detalle_pedidos`
+-- Estructura de tabla para la tabla `mascotas`
 --
 
-CREATE TABLE `detalle_pedidos` (
-  `id_detalle` int(11) NOT NULL,
-  `id_pedido` int(11) NOT NULL,
-  `producto` varchar(200) NOT NULL,
-  `cantidad` int(11) NOT NULL,
-  `subtotal` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `mascota`
---
-
-CREATE TABLE `mascota` (
+CREATE TABLE `mascotas` (
   `ID_Mascota` int(11) NOT NULL,
   `Nombre_Mascota` varchar(50) NOT NULL,
   `Edad_Mascota` int(15) NOT NULL,
@@ -145,27 +139,14 @@ CREATE TABLE `mascota` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `mascota`
+-- Volcado de datos para la tabla `mascotas`
 --
 
-INSERT INTO `mascota` (`ID_Mascota`, `Nombre_Mascota`, `Edad_Mascota`, `Fecha_nacimiento`, `Raza_Mascota`, `imagen`, `Observaciones_Mascota`, `ID_Usuario`, `Estado_Mascota`) VALUES
-(12, 'Gema', 4, '2021-05-23', 'Gato', '', 'Ninguna', 10, 1),
+INSERT INTO `mascotas` (`ID_Mascota`, `Nombre_Mascota`, `Edad_Mascota`, `Fecha_nacimiento`, `Raza_Mascota`, `imagen`, `Observaciones_Mascota`, `ID_Usuario`, `Estado_Mascota`) VALUES
+(12, 'Gemma', 4, '2021-05-23', 'Gato', '', 'Ninguna', 10, 1),
 (13, 'Alekey', 4, '2020-09-30', 'Golder Retriever', '', 'Mascota de pelo largo, color dorado brillante, 45.0 kg peso ', 14, 1),
-(14, 'Prueba minima para actualizar', 1, '2024-05-13', 'Golder Retriever', '', 'Mascota de prueba para realizar manual', 14, 0);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `pedidos`
---
-
-CREATE TABLE `pedidos` (
-  `id_pedido` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `fecha_pedido` date NOT NULL,
-  `MetodoPago_Pedido` tinyint(1) NOT NULL,
-  `Descripcion_Pedido` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(14, 'Prueba minima para actualizar', 1, '2024-05-13', 'Golder Retriever', '', 'Mascota de prueba para realizar manual', 14, 0),
+(15, 'Horus', 4, '2021-05-23', 'British ', '', 'Higado Graso', 10, 1);
 
 -- --------------------------------------------------------
 
@@ -258,7 +239,6 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre_completo`, `correo_electronico`, `
 -- Indices de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  ADD PRIMARY KEY (`ID_CarritoCompras`),
   ADD KEY `id usuario` (`id_usuario`),
   ADD KEY `producto` (`id_producto`);
 
@@ -286,25 +266,11 @@ ALTER TABLE `compras`
   ADD KEY `payment_id` (`payment_id`);
 
 --
--- Indices de la tabla `detalle_pedidos`
+-- Indices de la tabla `mascotas`
 --
-ALTER TABLE `detalle_pedidos`
-  ADD PRIMARY KEY (`id_detalle`),
-  ADD KEY `fk_id_pedido` (`id_pedido`);
-
---
--- Indices de la tabla `mascota`
---
-ALTER TABLE `mascota`
+ALTER TABLE `mascotas`
   ADD PRIMARY KEY (`ID_Mascota`),
   ADD KEY `id usuario` (`ID_Usuario`);
-
---
--- Indices de la tabla `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD PRIMARY KEY (`id_pedido`),
-  ADD KEY `fk_id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `productos`
@@ -334,7 +300,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `ID_CarritoCompras` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -355,22 +321,10 @@ ALTER TABLE `compras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `detalle_pedidos`
+-- AUTO_INCREMENT de la tabla `mascotas`
 --
-ALTER TABLE `detalle_pedidos`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `mascota`
---
-ALTER TABLE `mascota`
-  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT de la tabla `pedidos`
---
-ALTER TABLE `pedidos`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `mascotas`
+  MODIFY `ID_Mascota` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -405,7 +359,7 @@ ALTER TABLE `carrito_compras`
 --
 ALTER TABLE `citas`
   ADD CONSTRAINT `id_usuario_citas` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `mascota` FOREIGN KEY (`ID_Mascota`) REFERENCES `mascota` (`ID_Mascota`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `mascota` FOREIGN KEY (`ID_Mascota`) REFERENCES `mascotas` (`ID_Mascota`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `compras`
@@ -414,22 +368,10 @@ ALTER TABLE `compras`
   ADD CONSTRAINT `id_usuario` FOREIGN KEY (`id_user`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `detalle_pedidos`
+-- Filtros para la tabla `mascotas`
 --
-ALTER TABLE `detalle_pedidos`
-  ADD CONSTRAINT `fk_id_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedidos` (`id_pedido`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `mascota`
---
-ALTER TABLE `mascota`
+ALTER TABLE `mascotas`
   ADD CONSTRAINT `id usuario` FOREIGN KEY (`ID_Usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `pedidos`
---
-ALTER TABLE `pedidos`
-  ADD CONSTRAINT `fk_id_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `productos`

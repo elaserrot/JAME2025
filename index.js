@@ -1,6 +1,8 @@
 const os = require('os');
 const connectDB = require('./src/config/db');
 const createApp = require('./src/app');
+require('dotenv').config();
+
 const port = process.env.PORT || 3001;
 
 const getLocalIP = () => {

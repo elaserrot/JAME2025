@@ -27,7 +27,7 @@ const preference = new Preference(client);
 
 // Controlador para listar las compras 
 exports.listarCompras = async (req, res) => {
-    const q = "SELECT compras.*, usuarios.nombre_completo FROM compras INNER JOIN usuarios ON compras.id_user = usuarios.id_usuario";
+    const q = "SELECT compras.* FROM compras";
     conexion.query(q, (err, resultado) => {
         if (err) {
             console.log(err)

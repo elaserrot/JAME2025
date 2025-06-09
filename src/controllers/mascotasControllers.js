@@ -1,6 +1,6 @@
 // Controlador para listar mascotas
 exports.listarMascota = async (req, res) => {
-    const q = "SELECT * FROM mascota INNER JOIN usuarios ON mascota.ID_Usuario = usuarios.id_usuario WHERE mascota.Estado_Mascota = 1 ORDER BY mascota.ID_Mascota DESC";
+    const q = "SELECT * FROM mascotas INNER JOIN usuarios ON mascotas.ID_Usuario = usuarios.id_usuario WHERE mascotas.Estado_Mascota = 1 ORDER BY mascotas.ID_Mascota DESC";
     conexion.query(q, (err, resultado) => {
         if (err) {
             console.log(err)
@@ -12,7 +12,7 @@ exports.listarMascota = async (req, res) => {
 
 exports.listarMascotaPorCliente = async (req, res) => {
     const id = req.params.id;
-    const q = "SELECT * FROM mascota INNER JOIN usuarios ON mascota.ID_Usuario = usuarios.id_usuario WHERE mascota.Estado_Mascota = 1 AND mascota.ID_Usuario = ? ORDER BY mascota.ID_Mascota DESC";
+    const q = "SELECT * FROM mascotas INNER JOIN usuarios ON mascotas.ID_Usuario = usuarios.id_usuario WHERE mascotas.Estado_Mascota = 1 AND mascotas.ID_Usuario = ? ORDER BY mascotas.ID_Mascota DESC";
     conexion.query(q, [id], (err, resultado) => {
         if (err) {
             console.log(err)
@@ -29,7 +29,7 @@ exports.agregarMascota = async (req, res) => {
         return res.status(400).json({ error: "Todos los campos son obligatorios" });
     }
     const values = [Nombre_Mascota, Edad_Mascota, Fecha_nacimiento, Raza_Mascota, Observaciones_Mascota, ID_Usuario];
-    const q = "INSERT INTO `mascota`(`Nombre_Mascota`, `Edad_Mascota`, `Fecha_nacimiento`, `Raza_Mascota`, `Observaciones_Mascota`, `ID_Usuario`) VALUES (?, ?, ?, ?, ?, ?)";
+    const q = "INSERT INTO `mascotas`(`Nombre_Mascota`, `Edad_Mascota`, `Fecha_nacimiento`, `Raza_Mascota`, `Observaciones_Mascota`, `ID_Usuario`) VALUES (?, ?, ?, ?, ?, ?)";
     conexion.query(q, values, (err, resultado) => {
         if (err) {
             console.log(err)
@@ -43,7 +43,7 @@ exports.agregarMascota = async (req, res) => {
 exports.eliminarMascota = (req, res) => {
     const { id } = req.params;
 
-    conexion.query('UPDATE mascota SET Estado_Mascota = 0 WHERE ID_Mascota = ?', [id], (error, resultado) => {
+    conexion.query('UPDATE mascotas SET Estado_Mascota = 0 WHERE ID_Mascota = ?', [id], (error, resultado) => {
         if (error) {
             console.error('Error al eliminar la mascota:', error);
             return res.status(500).json({ mensaje: 'Error al eliminar la mascota' });
@@ -60,21 +60,21 @@ exports.eliminarMascota = (req, res) => {
 //Controlador para actualizar mascota
 exports.actualizarMascota = (req, res) => {
     const { id } = req.params;
-    conexion.query('SELECT * FROM mascota WHERE ID_Mascota = ?', [id], (error, resultado) => {
-        const mascota = resultado[0];
+    conexion.query('SELECT * FROM mascotas WHERE ID_Mascota = ?', [id], (error, resultado) => {
+        const mascotas = resultado[0];
         const { nombre, edad, raza, dueño, fecha } = req.body;
         if (!nombre || !edad || !raza || !dueño || !fecha) {
             return res.status(400).json({
                 error: "Todos los campos son obligatorios"
             });
         }
-        const q = "UPDATE mascota SET Nombre_Mascota = ? , `Edad_Mascota` = ?, `Fecha_nacimiento` = ?, `Raza_Mascota` = ?, `ID_Usuario` = ? WHERE ID_Mascota = ?";
+        const q = "UPDATE mascotas SET Nombre_Mascota = ? , `Edad_Mascota` = ?, `Fecha_nacimiento` = ?, `Raza_Mascota` = ?, `ID_Usuario` = ? WHERE ID_Mascota = ?";
         const values = [
-            nombre ? nombre : mascota.Nombre_Mascota,
-            edad ? edad : mascota.Edad_Mascota,
-            fecha ? fecha : mascota.Fecha_nacimiento,
-            raza ? raza : mascota.Raza_Mascota,
-            dueño ? dueño : mascota.ID_Usuario
+            nombre ? nombre : mascotas.Nombre_Mascota,
+            edad ? edad : mascotas.Edad_Mascota,
+            fecha ? fecha : mascotas.Fecha_nacimiento,
+            raza ? raza : mascotas.Raza_Mascota,
+            dueño ? dueño : mascotas.ID_Usuario
         ]
         conexion.query(q, [...values, id], (err
             , resultado) => {
