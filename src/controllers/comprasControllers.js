@@ -116,7 +116,7 @@ exports.eliminarCompra = async (req, res) => {
 
 exports.crearPago = async (req, res) => {
     const { title, unit_price } = req.body;
-    const url = "https://veterinaria-ciudad-canina.onrender.com"; 
+    const url = "https://main.d1pk7hlxc4temi.amplifyapp.com"; 
 
     const body = {
         items: [
