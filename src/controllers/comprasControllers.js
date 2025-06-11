@@ -116,7 +116,7 @@ exports.eliminarCompra = async (req, res) => {
 
 exports.crearPago = async (req, res) => {
     const { title, unit_price } = req.body;
-    const url = "https://8ace-190-24-56-223.ngrok-free.app"; 
+    const url = "https://veterinaria-ciudad-canina.onrender.com"; 
 
     const body = {
         items: [
